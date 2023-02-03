@@ -1,4 +1,3 @@
-
 let cards = document.querySelectorAll('.card');
 let arr = [];
 let counter = 0;
@@ -26,21 +25,24 @@ function flip() {
         gameOver();
     } else if (this.classList == 'card chosen') {
         this.classList.add('correct');
+        this.removeEventListener('click', flip)
         counter++;
     } else {
         this.classList.add('incorrect')
     }
 }
 function timer() {
-    button.addEventListener('click', function countdown() {
-        setInterval(function() { 
-            if (Number(time.textContent) === 0) {
+    button.addEventListener('click', function sss() {
+        let tim = Number(time.textContent);
+        let countdown = setInterval(function() { 
+            tim--; 
+            console.log(tim)
+            if (tim == 0) {
                 gameOver();
-            } else {
-                time.textContent = Number(time.textContent) - 1;
+                clearInterval(countdown )
             }
         }, 1000)
-        this.removeEventListener('click', countdown)
+        this.removeEventListener('click', sss)
     });
     
 }
@@ -48,6 +50,7 @@ function timer() {
 function gameOver() {
     cards.forEach(card => card.disabled = true)
 }
+
 randomCard() 
 cards.forEach(card => card.addEventListener('click', flip));
 timer();

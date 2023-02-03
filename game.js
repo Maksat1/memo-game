@@ -37,9 +37,10 @@ function timer() {
         let countdown = setInterval(function() { 
             tim--; 
             console.log(tim)
-            if (tim == 0) {
+            if (tim == 0 || counter == 5) {
+                
+                clearInterval(countdown );
                 gameOver();
-                clearInterval(countdown )
             }
         }, 1000)
         this.removeEventListener('click', sss)
@@ -48,7 +49,7 @@ function timer() {
 }
 
 function gameOver() {
-    cards.forEach(card => card.disabled = true)
+    cards.forEach(card => card.style.pointerEvents = 'none');
 }
 
 randomCard() 

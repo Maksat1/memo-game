@@ -1,8 +1,10 @@
 let cards = document.querySelectorAll('.card');
 let arr = [];
 let counter = 0;
+let countdown;
 let button = document.querySelector('#btn');
-let time = document.querySelector('#time')
+let time = document.querySelector('#time');
+let text = document.querySelector('#text');
 
 function randomCard() {
     while (true) {
@@ -21,12 +23,14 @@ function randomCard() {
 }
 
 function flip() {
-    if (counter == 5) {
-        gameOver();
-    } else if (this.classList == 'card chosen') {
+    if (this.classList == 'card chosen') {
         this.classList.add('correct');
         this.removeEventListener('click', flip)
         counter++;
+        if (counter == 5) {
+            clearInterval(countdown)
+            gameOver();
+        }
     } else {
         this.classList.add('incorrect')
     }
@@ -34,13 +38,16 @@ function flip() {
 function timer() {
     button.addEventListener('click', function sss() {
         let tim = Number(time.textContent);
-        let countdown = setInterval(function() { 
-            tim--; 
+        cards.forEach(card => card.style.pointerEvents = 'auto');
+        countdown = setInterval(function() { 
+            tim--;
+            time.textContent = tim;
             console.log(tim)
-            if (tim == 0 || counter == 5) {
-                
+            if (tim == 0) {
                 clearInterval(countdown );
                 gameOver();
+            } else if (counter == 5) {
+                clearInterval(countdown)
             }
         }, 1000)
         this.removeEventListener('click', sss)
@@ -50,7 +57,14 @@ function timer() {
 
 function gameOver() {
     cards.forEach(card => card.style.pointerEvents = 'none');
+    if (time.textContent == 0) {
+        text.textContent = 'Ты проиграл!';
+    } else {
+        text.textContent = 'Ты победил!'
+    }
 }
+
+cards.forEach(card => card.style.pointerEvents = 'none');
 
 randomCard() 
 cards.forEach(card => card.addEventListener('click', flip));

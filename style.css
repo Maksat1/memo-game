@@ -34,3 +34,13 @@ body {
 .incorrect {
     background-color: grey;
 }
+#btn {
+    height: 30px;
+    width: 70px;
+    font-size: 20px;
+    margin: auto;
+}
+#text {
+    margin: auto;
+
+}
